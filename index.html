@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <!--<link rel="icon" href="/favicon.ico" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rebased Token Swap</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+        href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
+        rel="stylesheet"
+    />
+    <link
+      href="style.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="loader-container">
+      <div id="loader"></div>
+    </div>
+
+    <main class="flex justify-center hidden">
+        <div id="connected-container" class="flex flex-col items-center hidden">
+            <div id="address-label"></div>
+            <div>REB: <span id="rebv1-label">0</span></div>
+            <div>REB2: <span id="rebv2-label">0</span></div>
+            <div class="flex justify-center">
+                <button id="approve-button" class="light" disabled>Approve</button>
+                <button id="swap-button"    class="dark" disabled>Swap (receive <span>0</span> REB2)</button>
+                <button id="faucet-button"  class="light">Faucet</button>
+            </div>
+        </div>
+
+        <div id="connect-container" class="flex justify-center hidden">
+            <button>Connect to Metamask</button>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <script src="script.web3.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
