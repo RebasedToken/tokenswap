@@ -8,10 +8,11 @@ const approveButton = document.getElementById('approve-button');
 const swapButton = document.getElementById('swap-button');
 const faucetButton = document.getElementById('faucet-button');
 
+const networkLabel = document.getElementById('network-label');
 const addressLabel = document.getElementById('address-label');
 const rebV1Label = document.getElementById('rebv1-label');
 const rebV2Label = document.getElementById('rebv2-label');
-const swapRateLabel = swapButton.querySelector('span');
+const swapRateLabel = document.getElementById('swap-rate-label');
 
 let address;
 
@@ -41,6 +42,8 @@ async function load() {
         if (networkId !== ROPSTEN_ID) {
             return alert('Please connect to ropsten');
         }
+
+        networkLabel.innerText = await window.WEB3.eth.net.getNetworkType();
 
         rebV1Contract.setContract({abi: await xhr('get', 'abi/erc20.abi.json'), address: rebV1Address});
         rebV2Contract.setContract({abi: await xhr('get', 'abi/erc20.abi.json'), address: rebV2Address});
@@ -89,18 +92,17 @@ async function loadBalances() {
     rebV1Label.innerText = Web3.utils.fromWei(rebV1Balance, 'gwei');
     rebV2Label.innerText = Web3.utils.fromWei(rebV2Balance, 'gwei');
 
+    const rate = await swapContract.read('getReb2OutputAmount', [rebV1Balance]);
+    console.log('rate', rate);
+    swapRateLabel.innerText = Web3.utils.fromWei(rate, 'gwei');
+
     const allowance = new Web3.utils.BN(await rebV1Contract.read('allowance', [address, swapAddress]));
     console.log('allowance', allowance.toString());
 
     if (allowance.isZero()) {
         enable(approveButton);
     } else {
-        const rate = await swapContract.read('getReb2OutputAmount', [rebV1Balance]);
-        console.log('rate', rate);
-
         enable(swapButton);
-
-        swapRateLabel.innerText = Web3.utils.fromWei(rate, 'gwei');
     }
     
 }
@@ -108,7 +110,7 @@ async function loadBalances() {
 async function setAddress(addr) {
     address = addr;
     if (address) {
-        addressLabel.innerText = address;
+        addressLabel.innerText = `${address.substring(0, 6)}...${address.substring(address.length-4, address.length)}`;
 
         rebV1Contract.setAccount(address);
         rebV2Contract.setAccount(address);

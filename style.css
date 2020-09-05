@@ -75,8 +75,8 @@ body {
   -webkit-animation: loader 1s infinite ease-in-out;
   animation-delay: -0.16s;
   -webkit-animation-delay: -0.16s;
-  background: #a160fe;
-  color: #a160fe;
+  background: #feb23d;
+  color: #feb23d;
   font-size: 6px;
   height: 20px;
   position: relative;
@@ -92,7 +92,7 @@ body {
   -webkit-animation: loader 1s infinite ease-in-out;
   animation-delay: -0.32s;
   -webkit-animation-delay: -0.32s;
-  background: #a160fe;
+  background: #feb23d;
   content: '';
   height: 20px;
   left: -1.5em;
@@ -106,7 +106,7 @@ body {
   -webkit-animation: loader 1s infinite ease-in-out;
   animation-delay: 0.08s;
   -webkit-animation-delay: 0.08s;
-  background: #a160fe;
+  background: #feb23d;
   content: '';
   height: 20px;
   left: 1.5em;
@@ -191,7 +191,7 @@ button.dark:focus,
 button.dark:active{
   color: white;
   text-shadow: rgba(0, 0, 0, 0) 0 1px 0;
-  background: linear-gradient(135deg,#784ffe,#a160fe);
+  background: linear-gradient(135deg,#e13833,#feb23d);
 }
 
 .flex {
@@ -202,8 +202,16 @@ button.dark:active{
     flex-direction: column;
 }
 
+.flex-grow {
+    flex: 1;
+}
+
 .justify-center {
     justify-content: center;
+}
+
+.justify-space {
+    justify-content: space-between;
 }
 
 .items-center {
@@ -214,12 +222,8 @@ button.dark:active{
     display: none;
 }
 
-main {
-    padding: 50px;
-}
-
-#faucet {
-    margin-top: 50px
+.full-width {
+  width: 100%;
 }
 
 #nprogress .bar {
@@ -227,15 +231,83 @@ main {
 }
 
 #nprogress .bar {
-  background: #a160fe !important;
+  background: #e13833 !important;
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px #a160fe, 0 0 5px #a160fe !important;
+  box-shadow: 0 0 10px #e13833, 0 0 5px #e13833 !important;
 }
 
 #nprogress .spinner-icon {
   display: none;
-  border-top-color: #a160fe !important;
-  border-left-color: #a160fe !important;
+  border-top-color: #e13833 !important;
+  border-left-color: #e13833 !important;
+}
+
+
+main {
+  width: 960px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+#faucet-button {
+  padding: 4px 15px;
+  margin-right: 15px;
+}
+
+#header {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+#network-label {
+  padding: 4px 15px;
+  background: #f6bbaf5e;
+  color: #e13833;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+#main-heading {
+  color: black;
+}
+
+.balances {
+  text-align: center;
+  padding: 32px;
+  border-radius: 8px;
+  /*background: #f6bbaf21;*/
+  color: #e13833;
+}
+
+.balances > div {
+  padding: 20px 0;
+}
+
+/* .balance {
+
+} */
+
+.balance__heading {
+  font-size: 13px;
+}
+
+.balance__body {
+  font-size: 34px;
+  font-weight: 500;
+}
+
+#actions {
+  margin-bottom: 25px;
+}
+
+#actions button {
+  border-radius: 18px;
+  font-size: 20px;
+  padding: 15px 35px;
+  margin: 0 5px;
+  width: 200px;
 }
