@@ -1,5 +1,3 @@
-const ROPSTEN_ID = 3;
-
 const rootContainer = document.getElementById('root-container');
 const loaderContainer = document.getElementById('loader-container');
 const connectContainer = document.getElementById('connect-container');
@@ -18,11 +16,7 @@ const rebV2Label = document.getElementById('rebv2-label');
 const swapRateLabel = document.getElementById('swap-rate-label');
 
 let address;
-
-const rebV1Address = '0xfF96067060626Ea33AF23Eb5b188aaA6763E88d6';
-const rebV2Address = '0x9611E3336fb5c84e038a32F6Ad31A25c2D9D0820';
-const swapAddress = '0x969f3129813738241E9103dbCc0f8837973CD005';
-const faucetAddress = '0xC84F2c6a2d49951681236abd1A05886b8FB6380D';
+let config;
 
 const rebV1Contract = new Contract();
 const rebV2Contract = new Contract();
@@ -45,16 +39,19 @@ async function load() {
         });
 
         const networkId = await window.WEB3.eth.net.getId();
-        if (networkId !== ROPSTEN_ID) {
-            return sl('error', 'Please connect to ropsten testnet.');
+        if (!(networkId in CONFIG)) {
+            // return sl('error', 'Please connect to mainnet or ropsten testnet.');
+            return sl('error', 'Unsupported network.');
         }
+
+        config = CONFIG[networkId];
 
         networkLabel.innerText = await window.WEB3.eth.net.getNetworkType();
 
-        rebV1Contract.setContract({abi: await xhr('get', 'abi/erc20.abi.json'), address: rebV1Address});
-        rebV2Contract.setContract({abi: await xhr('get', 'abi/erc20.abi.json'), address: rebV2Address});
-        swapContract.setContract({abi: await xhr('get', 'abi/rebased-swap.abi.json'), address: swapAddress});
-        faucetContract.setContract({abi: await xhr('get', 'abi/rebased-test-faucet.abi.json'), address: faucetAddress});
+        rebV1Contract.setContract({abi: await xhr('get', 'abis/erc20.abi.json'), address: config.rebV1Address});
+        rebV2Contract.setContract({abi: await xhr('get', 'abis/erc20.abi.json'), address: config.rebV2Address});
+        swapContract.setContract({abi: await xhr('get', 'abis/rebased-swap.abi.json'), address: config.swapAddress});
+        faucetContract.setContract({abi: await xhr('get', 'abis/rebased-test-faucet.abi.json'), address: config.faucetAddress});
 
         approveButton.addEventListener('click', function() {
             approve();
@@ -106,10 +103,10 @@ async function loadBalances() {
     console.log('rate', rate);
     swapRateLabel.innerText = toHumanizedCurrency(Web3.utils.fromWei(rate, 'gwei'));
 
-    const allowance = new Web3.utils.BN(await rebV1Contract.read('allowance', [address, swapAddress]));
+    const allowance = new Web3.utils.BN(await rebV1Contract.read('allowance', [address, config.swapAddress]));
     console.log('allowance', allowance.toString());
-
-    if (allowance.isZero()) {
+    
+    if (allowance.lt(new Web3.utils.BN(rebV1Balance))) {
         enable(approveButton);
     } else {
         enable(swapButton);
@@ -138,7 +135,7 @@ async function approve() {
         return sl('error', 'Your balance is zero. Request some test tokens from faucet.');
     }
     console.log('approving', balance.toString());
-    await waitForTxn(await rebV1Contract.write('approve', [swapAddress, balance]));
+    await waitForTxn(await rebV1Contract.write('approve', [config.swapAddress, balance]));
     await loadBalances();
 }
 
