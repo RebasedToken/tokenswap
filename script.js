@@ -98,12 +98,12 @@ async function loadBalances() {
     const rebV1Balance = await rebV1Contract.read('balanceOf', [address]);
     const rebV2Balance = await rebV2Contract.read('balanceOf', [address]);
 
-    rebV1Label.innerText = Web3.utils.fromWei(rebV1Balance, 'gwei');
-    rebV2Label.innerText = Web3.utils.fromWei(rebV2Balance, 'gwei');
+    rebV1Label.innerText = toHumanizedCurrency(Web3.utils.fromWei(rebV1Balance, 'gwei'));
+    rebV2Label.innerText = toHumanizedCurrency(Web3.utils.fromWei(rebV2Balance, 'gwei'));
 
     const rate = await swapContract.read('getReb2OutputAmount', [rebV1Balance]);
     console.log('rate', rate);
-    swapRateLabel.innerText = Web3.utils.fromWei(rate, 'gwei');
+    swapRateLabel.innerText = toHumanizedCurrency(Web3.utils.fromWei(rate, 'gwei'));
 
     const allowance = new Web3.utils.BN(await rebV1Contract.read('allowance', [address, swapAddress]));
     console.log('allowance', allowance.toString());
@@ -205,11 +205,15 @@ function completeBootLoader() {
     document.documentElement.classList.remove('anim-loading');
     loaderContainer.remove();
     show(rootContainer);
-  }
+}
 
-  function sl(type, msg) {
+function sl(type, msg) {
     Swal.fire({
         icon: type,
         text: msg
     })
-  }
+}
+
+function toHumanizedCurrency(val) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val).replace('$', '');
+}
