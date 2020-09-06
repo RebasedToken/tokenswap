@@ -39,9 +39,10 @@ async function load() {
         //   document.location.reload();
         // });
     
-        // window.ethereum.on('accountsChanged', function (accounts) {
-        //   setAddress(accounts[0]);
-        // });
+        window.ethereum.on('accountsChanged', function ([account]) {
+          setAddress(account);
+          loadBalances();
+        });
 
         const networkId = await window.WEB3.eth.net.getId();
         if (networkId !== ROPSTEN_ID) {
@@ -148,7 +149,7 @@ async function swap() {
 }
 
 async function faucet() {
-    await waitForTxn(await waitForTxn(await faucetContract.write('requestTokens')));
+    await waitForTxn(await faucetContract.write('requestTokens'));
     await loadBalances();
 }
 

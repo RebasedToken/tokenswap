@@ -179,9 +179,9 @@ header {
   padding: 20px 0;
 }
 
-/* .balance {
-
-} */
+.balance {
+    position: relative;
+}
 
 .balance__heading {
   font-size: 13px;
@@ -190,6 +190,12 @@ header {
 .balance__body {
   font-size: 34px;
   font-weight: 500;
+}
+
+#rebv2-container {
+  position: absolute;
+  left: 100%;
+  min-width: 300px;
 }
 
 #actions {
