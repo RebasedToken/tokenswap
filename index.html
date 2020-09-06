@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rebased Token Swap</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+        href="https://unpkg.com/nprogress@0.2.0/nprogress.css"
+        rel="stylesheet"
+    />
+    <link
+      href="style.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <div id="loader-container">
+      <div id="loader"></div>
+    </div>
+
+    <div id="root-container" class="hidden">
+      <header class="flex items-center justify-space">
+        <h2 class="flex flex-grow items-center">
+          <img src="logo.png" alt="logo" width="30" height="30" />
+        </h2>
+
+        <div id="header-actions" class="flex items-center justify-space">
+          <button id="faucet-button"  class="light">Faucet</button>
+          <div id="network-label" class="flex justify-center"></div>
+          <div id="address-label" class="flex justify-center"></div>
+        </div>
+      </header>
+
+      <main class="flex flex-col items-center full-width">
+        <h1 id="main-heading">Swap REB to REB2</h1>
+
+        <div id="connected-container" class="flex flex-col items-center hidden full-width">
+          <div class="balances flex flex-col items-center">
+
+            <div class="balance flex items-center">
+              <div id="rebv1-label" class="balance__body">0</div>
+              <div class="balance__heading">REB</div>
+            </div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C3C5CB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+
+            <div id="rebv2-balance" class="balance flex items-center">
+              <div class="flex items-center">
+                <div id="swap-rate-label" class="balance__body">0</div>
+                <div class="balance__heading">REB2</div> 
+              </div>
+              <div id="rebv2-container">(Current balance: <b id="rebv2-label">0</b> REB2.)</div>
+            </div>
+          </div>
+          <div id="actions" class="flex justify-center">
+              <button id="approve-button" class="light" disabled>Approve</button>
+              <button id="swap-button"    class="dark" disabled>Swap</button>
+          </div>
+        </div>
+
+        <div id="connect-container" class="flex justify-center hidden">
+            <button class="dark">Connect to Metamask</button>
+        </div>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="script.config.js"></script>
+    <script src="script.web3.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
