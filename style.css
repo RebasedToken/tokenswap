@@ -136,25 +136,6 @@ button.dark:active{
   width: 100%;
 }
 
-#nprogress .bar {
-  z-index: 10000000000 !important;
-}
-
-#nprogress .bar {
-  background: #e13833 !important;
-}
-
-#nprogress .peg {
-  box-shadow: 0 0 10px #e13833, 0 0 5px #e13833 !important;
-}
-
-#nprogress .spinner-icon {
-  display: none;
-  border-top-color: #e13833 !important;
-  border-left-color: #e13833 !important;
-}
-
-
 main {
   width: 960px;
   margin: 0 auto;
@@ -166,7 +147,7 @@ main {
   margin-right: 15px;
 }
 
-#header {
+header {
   position: fixed;
   top: 16px;
   left: 16px;
@@ -183,11 +164,12 @@ main {
 
 #main-heading {
   color: black;
+  margin-bottom: 32px;
 }
 
 .balances {
   text-align: center;
-  padding: 32px;
+  padding: 0 32px 32px;
   border-radius: 8px;
   /*background: #f6bbaf21;*/
   color: #e13833;
@@ -221,7 +203,6 @@ main {
   margin: 0 5px;
   width: 200px;
 }
-
 
 .anim-loading,
 .anim-loading body {
@@ -312,3 +293,22 @@ main {
     height: 5em;
   }
 }
+
+#nprogress .bar {
+  z-index: 10000000000 !important;
+}
+
+#nprogress .bar {
+  background: #e13833 !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #e13833, 0 0 5px #e13833 !important;
+}
+
+#nprogress .spinner-icon {
+  display: none;
+  border-top-color: #e13833 !important;
+  border-left-color: #e13833 !important;
+}
+

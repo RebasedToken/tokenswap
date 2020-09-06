@@ -24,44 +24,52 @@
       <div id="loader"></div>
     </div>
 
-    <main class="hidden">
+    <div id="root-container" class="hidden">
+      <header class="flex items-center justify-space">
+        <h2 class="flex flex-grow items-center">
+          <img src="logo.png" alt="logo" width="30" height="30" />
+        </h2>
+
+        <div id="header-actions" class="flex items-center justify-space">
+          <button id="faucet-button"  class="light">Faucet</button>
+          <div id="network-label" class="flex justify-center"></div>
+          <div id="address-label" class="flex justify-center"></div>
+        </div>
+      </header>
+
+      <main class="flex flex-col items-center full-width">
+        <h1 id="main-heading">Swap REB to REB2</h1>
+
         <div id="connected-container" class="flex flex-col items-center hidden full-width">
-            <div id="header" class="flex items-center justify-space">
-              <h2 class="flex flex-grow items-center">
-                <img src="logo.png" alt="logo" width="30" height="30" />
-              </h2>
-              <button id="faucet-button"  class="light">Faucet</button>
-              <div id="network-label" class="flex justify-center"></div>
-              <div id="address-label" class="flex justify-center"></div>
-            </div>
-            <div class="balances flex flex-col items-center">
-              <h1 id="main-heading">Swap REB to REB2</h1>
+          <div class="balances flex flex-col items-center">
 
-              <div class="balance flex items-center">
-                <div id="rebv1-label" class="balance__body">0</div>
-                <div class="balance__heading">REB</div>
-              </div>
-
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C3C5CB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-
-              <div class="balance flex items-center">
-                <div id="rebv2-label" class="balance__body">0</div>
-                <div class="balance__heading">REB2</div>
-              </div>
+            <div class="balance flex items-center">
+              <div id="rebv1-label" class="balance__body">0</div>
+              <div class="balance__heading">REB</div>
             </div>
-            <div id="actions" class="flex justify-center">
-                <button id="approve-button" class="light" disabled>Approve</button>
-                <button id="swap-button"    class="dark" disabled>Swap</button>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C3C5CB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+
+            <div class="balance flex items-center">
+              <div id="rebv2-label" class="balance__body">0</div>
+              <div class="balance__heading">REB2</div>
             </div>
-            <div>You will receive <b id="swap-rate-label">0</b> REB2</div>
+          </div>
+          <div id="actions" class="flex justify-center">
+              <button id="approve-button" class="light" disabled>Approve</button>
+              <button id="swap-button"    class="dark" disabled>Swap</button>
+          </div>
+          <div>You will receive <b id="swap-rate-label">0</b> REB2.</div>
         </div>
 
         <div id="connect-container" class="flex justify-center hidden">
-            <button>Connect to Metamask</button>
+            <button class="dark">Connect to Metamask</button>
         </div>
-    </main>
+      </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="script.web3.js"></script>
     <script src="script.js"></script>
   </body>

@@ -1,4 +1,10 @@
-window.WEB3 = new Web3(window.web3.currentProvider);
+function registerWeb3() {
+  window.WEB3 = new Web3(window.web3.currentProvider);
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
 
 class Contract {
     setContract({abi, address}) {
@@ -63,7 +69,7 @@ function waitForTxnPromise(txHash, interval) {
       .then((receipt) =>
         receipt !== null
           ? receipt
-          : sleep(interval ? interval : 500).then(
+          : sleep(interval ? interval : 1000).then(
               transactionReceiptRetry
             )
       );
@@ -96,8 +102,4 @@ function sequentialPromise(promiseArray) {
     }
   );
   return result.chain.then(() => result.results);
-}
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
 }

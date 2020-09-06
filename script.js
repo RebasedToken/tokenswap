@@ -1,7 +1,10 @@
 const ROPSTEN_ID = 3;
 
+const rootContainer = document.getElementById('root-container');
+const loaderContainer = document.getElementById('loader-container');
 const connectContainer = document.getElementById('connect-container');
 const connectedContainer = document.getElementById('connected-container');
+const headerActions = document.getElementById('header-actions');
 
 const connectButton = connectContainer.querySelector('button');
 const approveButton = document.getElementById('approve-button');
@@ -30,6 +33,8 @@ load();
 
 async function load() {    
     if (window.ethereum) {
+        registerWeb3();
+
         // window.ethereum.on('chainChanged', () => {
         //   document.location.reload();
         // });
@@ -40,7 +45,7 @@ async function load() {
 
         const networkId = await window.WEB3.eth.net.getId();
         if (networkId !== ROPSTEN_ID) {
-            return alert('Please connect to ropsten');
+            return sl('error', 'Please connect to ropsten testnet.');
         }
 
         networkLabel.innerText = await window.WEB3.eth.net.getNetworkType();
@@ -49,10 +54,6 @@ async function load() {
         rebV2Contract.setContract({abi: await xhr('get', 'abi/erc20.abi.json'), address: rebV2Address});
         swapContract.setContract({abi: await xhr('get', 'abi/rebased-swap.abi.json'), address: swapAddress});
         faucetContract.setContract({abi: await xhr('get', 'abi/rebased-test-faucet.abi.json'), address: faucetAddress});
-
-        connectButton.addEventListener('click', function() {
-            connectWeb3();
-        });
 
         approveButton.addEventListener('click', function() {
             approve();
@@ -67,21 +68,29 @@ async function load() {
         });
     }
 
+    connectButton.addEventListener('click', function() {
+        connectWeb3();
+    });
+
     loadAccount();
 }
 
 async function connectWeb3() {
     if (!window.ethereum) {
-        return alert('Please install Metamask browser extension.');
+        return sl('error', 'Please install Metamask browser extension.');
     }
     await ethereum.request({ method: 'eth_requestAccounts' });
     await loadAccount();
 }
 
 async function loadAccount() {
-    const [addr] = await ethereum.request({ method: 'eth_requestAccounts' });
-    setAddress(addr);
-    if (address) await loadBalances();
+    if (window.ethereum) {
+        const [addr] = await ethereum.request({ method: 'eth_requestAccounts' });
+        setAddress(addr);
+        if (address) await loadBalances();
+    } else {
+        setAddress();
+    }
     completeBootLoader();
 }
 
@@ -119,12 +128,13 @@ async function setAddress(addr) {
     }
     toggle(connectContainer, !address);
     toggle(connectedContainer, address);
+    toggle(headerActions, address);
 }
 
 async function approve() {
     const balance = new Web3.utils.BN(await rebV1Contract.read('balanceOf', [address]));
     if (balance.isZero()) {
-        return alert('Your balance is zero. Request some test tokens from faucet');
+        return sl('error', 'Your balance is zero. Request some test tokens from faucet.');
     }
     console.log('approving', balance.toString());
     await waitForTxn(await rebV1Contract.write('approve', [swapAddress, balance]));
@@ -193,6 +203,13 @@ async function xhr(method, endpoint, data) {
 
 function completeBootLoader() {
     document.documentElement.classList.remove('anim-loading');
-    document.getElementById('loader-container').remove();
-    show(document.querySelector('main'));
+    loaderContainer.remove();
+    show(rootContainer);
+  }
+
+  function sl(type, msg) {
+    Swal.fire({
+        icon: type,
+        text: msg
+    })
   }
