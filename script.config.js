@@ -2,7 +2,11 @@ const MAINNET_ID = 1;
 const ROPSTEN_ID = 3;
 
 const CONFIG = {
-    // [MAINNET_ID]: {},
+    [MAINNET_ID]: {
+        rebV1Address: '0xE6279E1c65DD41b30bA3760DCaC3CD8bbb4420D6',
+        rebV2Address: '0x87F5F9eBE40786D49D35E1B5997b07cCAA8ADbFF',
+        swapAddress: '0xf107De92785f152683b092E8D67bC8b145510A26',
+    },
     [ROPSTEN_ID]: {
         rebV1Address: '0xfF96067060626Ea33AF23Eb5b188aaA6763E88d6',
         rebV2Address: '0x9611E3336fb5c84e038a32F6Ad31A25c2D9D0820',
